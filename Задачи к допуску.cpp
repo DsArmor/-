@@ -163,8 +163,9 @@ void rog()
 	}
 	
 	int temp=0, finish = a[0] * 1000 + a[1] * 100 + a[2] * 10 + a[3],l=0;
-	
-	while (temp!=finish && l<15){
+	cout << "Введите число: ";
+	while (temp!=finish && l<30){
+		
 		int rog = 0, cow = 0;
 		cin >> temp;
 		int b[4];
@@ -186,11 +187,91 @@ void rog()
 				}
 			}
 		}
+		if (temp != finish)
+			cout << "Try again" << endl;
 		cout << "Быки: " << rog << " Коровы: " << cow << endl;
 		l++;
 	}
-	cout << "GG";
+	cout << "GG " << l;
 
+}
+int teachers[600], students[600][3];
+//поиск учителей монаха
+int search_teachers(int monk, int monk1=0) {
+	for (int i = 0; i < 600; i++) {
+		if (teachers[i]) {
+			for (int j = 0; j < 3; j++) {
+				if (students[teachers[i]][j] == monk) {
+					if (teachers[i] != 1) {
+						cout << teachers[i] << " ";
+					}
+					search_teachers(teachers[i]);
+					return 1;
+				}	
+			}
+		}
+	}
+}
+//проверка на наличие монаха в списке
+int verification(int monk) {
+	for (int i = 0; i < 600; i++) {
+		if (teachers[i]) {
+			for (int j = 0; j < 3; j++) {
+				if (students[teachers[i]][j] == monk) {
+					return 1;
+				}
+					
+			}
+		}
+	}
+	return 0;
+}
+
+void monks() {
+	int n;
+	cout << "Введите количество монахов: ";
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cout << "Монах: ";
+		cin >> teachers[i];
+		cout << " Его ученики: ";
+		for (int j = 0; j < 3; j++) {
+			cin >> students[teachers[i]][j];
+		}
+	}
+	cout << "Введите количество запросов к базе данных: ";
+	cin >> n;
+	int number,temp, temp1;
+	for (int i = 0; i < n; i++) {
+		cout << "Количество монашеских номеров в запросе: ";
+		cin >> number;
+		if (number == 2) {
+			cout << "Номера монахов: ";
+			cin >> temp >> temp1;
+			if (verification(temp)) {
+				if (verification(temp)) {
+					search_teachers(temp, temp1);
+				}
+				else
+					cout << temp << " - не монах";
+			}
+			else
+				cout << temp << " - не монах";
+		}
+			
+		else {
+			cout << "Номер монаха: ";
+			cin >> temp;
+			if (verification(temp)) {
+				cout << temp << "-монах, его учителя: ";
+				search_teachers(temp);
+			}
+			else
+				cout << temp << " - не монах";
+		}
+			
+		
+	}
 }
 
 int main()
@@ -203,6 +284,7 @@ int main()
 	cout << "Задача про шарики - 3" << endl;
 	cout << "Обработка текстовых файлов - 4" << endl;
 	cout << "Быки и коровы - 5" << endl;
+	cout << "Монахи - 6" << endl;
 	cout << "Введите номер задания: ";
 	bool a[10] = { false };
 	cin >> n;
@@ -222,6 +304,8 @@ int main()
 	case(5):
 		rog();
 		break;
+	case(6):
+		monks();
+		break;
 	}
-
 }
