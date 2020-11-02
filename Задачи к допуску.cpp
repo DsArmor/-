@@ -201,13 +201,27 @@ int search_teachers(int monk, int monk1=0) {
 	for (int i = 0; i < 600; i++) {
 		if (teachers[i]) {
 			for (int j = 0; j < 3; j++) {
-				if (students[teachers[i]][j] == monk) {
-					if (teachers[i] != 1) {
-						cout << teachers[i] << " ";
+				if (monk > monk1) {
+					if (students[teachers[i]][j] == monk) {
+						if (teachers[i] != 1 && monk1 == 0) {
+							cout << teachers[i] << " ";
+						}
+						search_teachers(teachers[i], monk1);
+						return 1;
+
 					}
-					search_teachers(teachers[i]);
-					return 1;
+				}
+				else if (monk1 > monk) {
+					if (students[teachers[i]][j] == monk1) {
+						search_teachers(teachers[i], monk);
+						return 1;
+					}
 				}	
+				else {
+					cout << "их общий учитель - " << monk;
+					return 1;
+				}
+					
 			}
 		}
 	}
@@ -249,14 +263,16 @@ void monks() {
 			cout << "Номера монахов: ";
 			cin >> temp >> temp1;
 			if (verification(temp)) {
-				if (verification(temp)) {
+				if (verification(temp1)) {
+					cout << "Оба монахи, ";
 					search_teachers(temp, temp1);
+					cout << endl;
 				}
 				else
-					cout << temp << " - не монах";
+					cout << temp1 << " - не монах" << endl;
 			}
 			else
-				cout << temp << " - не монах";
+				cout << temp << " - не монах" << endl;
 		}
 			
 		else {
@@ -265,9 +281,10 @@ void monks() {
 			if (verification(temp)) {
 				cout << temp << "-монах, его учителя: ";
 				search_teachers(temp);
+				cout << endl;
 			}
 			else
-				cout << temp << " - не монах";
+				cout << temp << " - не монах" << endl;
 		}
 			
 		
